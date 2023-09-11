@@ -1,0 +1,15 @@
+.git
+.gitignore
+.DS_Store
+bin
+res/icons/*.fla
+res/icons/*.svg
+res/icons/*.sketch
+res/icons/v3
+build.sh
+buildExcludes
+publishScreenshot
+tests
+README.md
+service-worker.js
+popup.js
