@@ -3,7 +3,7 @@
     "version": "4.0.0",
     "manifest_version": 3,
     "author": "Jaseem V V",
-    "description": "Organize Bookmarks",
+    "description": "Sort Bookmarks Alphabetically",
     "permissions": ["bookmarks", "storage"],
     "background": {
         "service_worker": "service-worker.js"
