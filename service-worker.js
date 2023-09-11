@@ -1,29 +1,37 @@
-console.log("service-worker init");
+// Bookmarks Organizer
+// (c) 2013-2023 Jaseem V V. All rights reserved.
 
-function onCreated(id, moveInfo) {
-    console.log('bookmarks created');
-    console.log(moveInfo);
+var BOOKMARKS_BAR_ID = '1',
+    OTHER_BOOKMARKS_ID = '2',
+    IS_IMPORT = 'isImport';
+
+function setStorage(key, value, callback) {
+    var o = {};
+    o[key] = value;
+    chrome.storage.local.set(o, callback);
 }
 
-function onMoved(id, moveInfo) {
-    console.log('bookmarks moved');
-    console.log(moveInfo);
-    getBookmarksSubTree(moveInfo.parentId, function(nodes) {
-        console.log('nodes: %o', nodes);
-        if (nodes.length == 1 && nodes[0].hasOwnProperty('children')) {
-            sortByTitle(nodes[0].children, true);
+function getStorage(key, callback) {
+    chrome.storage.local.get(key).then(val => callback(val[key]));    
+}
+
+function removeStorage(key, callback) {
+    chrome.storage.local.remove(key, callback);
+}
+
+async function onMoved(id, moveInfo) {
+    getStorage(IS_IMPORT, (isImport) => {
+        if (!isImport) {
+            getBookmarks(moveInfo.parentId, function(nodes) {
+                if (nodes.length == 1 && nodes[0].hasOwnProperty('children')) {
+                    sortByTitle(nodes[0].children, true);
+                }
+            });
         }
-        
     });
 }
 
-function getAllBookmarks() {
-    chrome.bookmarks.getTree(function(nodes) {
-        console.log(nodes);
-    });
-}
-
-function getBookmarksSubTree(id, callback) {
+function getBookmarks(id, callback) {
     chrome.bookmarks.getSubTree(id, callback);
 }
 
@@ -38,7 +46,6 @@ function move(node) {
 }
 
 function sortByTitle(nodes, isRecursive) {
-    console.log(nodes);
     var folders = [];
     var leafs = [];
     for (n of nodes) {
@@ -51,33 +58,42 @@ function sortByTitle(nodes, isRecursive) {
     leafs = leafs.sort(sort);
     folders = folders.sort(sort);
     for (var i = 0; i < folders.length; i++) {
-        if (folders[i].index != i) {
+        if (folders[i].index != i) {  // avoid updating folders that are not changed
             folders[i].index = i;
             move(folders[i]);
         }
+        // recursive is not used for auto sort because create or move is within a parent
         if (isRecursive && folders[i].hasOwnProperty('children') && folders[i].children.length > 0) {
             sortByTitle(folders[i].children, isRecursive);
         }
     }
     var idx = folders.length;
     for (var i = 0; i < leafs.length; i++, idx++) {
-        if (leafs[i].index != i) {
+        if (leafs[i].index != i) {  // avoid updating bookmarks that are not changed
             leafs[i].index = idx;
-            console.log('index %d changed to %d', i, idx);
             move(leafs[i]);    
         }
     }
-    console.log('folders: %o', folders);
-    console.log('leafs: %o', leafs);
 }
 
-
-// getAllBookmarks();
-getBookmarksSubTree('2094', function(nodes) {
-    console.log('sub tree for 2094');
-    console.log(nodes);
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    if (request.message == 'sort') {
+        var nodes = getBookmarks(BOOKMARKS_BAR_ID, function(nodes) {
+            sortByTitle(nodes, true);
+            sendResponse('success');
+        });
+    }
+    return true;
 });
 
-chrome.bookmarks.onCreated.addListener(onCreated);
+// Auto sort bookmarks on add or move
+chrome.bookmarks.onCreated.addListener(onMoved);
 chrome.bookmarks.onMoved.addListener(onMoved);
-// TODO: import begin - don't sort
+
+// Ignore bookmarks sorting on import
+chrome.bookmarks.onImportBegan.addListener(function() {
+    setStorage(IS_IMPORT, true);
+});
+chrome.bookmarks.onImportEnded.addListener(function() {
+    removeStorage(IS_IMPORT);
+});

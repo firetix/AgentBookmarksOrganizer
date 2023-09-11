@@ -1,7 +1,7 @@
-## Bookmarks Organizer Google Chrome Extension
-v3.0.0
+## Bookmarks Organizer Chrome Extension
+v4.0.0
 
-Bookmarks Organizer helps in keeping the bookmarks sorted. It monitors for newly added or moved bookmarks and auto arranges them  in ascending order by title. There is a reorder button to manually order the whole bookmark, which can be used initially after installation.
+Bookmarks Organizer helps in keeping the bookmarks sorted. It monitors for newly added or moved bookmarks and auto arranges them in ascending order by title. There is a reorder button to manually order the bookmarks in the Bookmarks Bar which can be used initially after installation.
 
 #### Limitations
 
@@ -12,6 +12,10 @@ Bookmarks Organizer helps in keeping the bookmarks sorted. It monitors for newly
 [<img src='https://developer.chrome.com/webstore/images/ChromeWebStore_BadgeWBorder_v2_206x58.png'>](https://chrome.google.com/webstore/detail/bookmarks-organizer/cjdenbocfdbjohomdaojaokiffjbnaca)
 
 #### Change Logs
+
+##### Version 4.0.0
+
+- Upgrade to manifest v3 and rewrite to use service worker and popup script
 
 ##### Version 3.0.0
 

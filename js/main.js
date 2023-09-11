@@ -86,13 +86,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function sortBookmarks (node) {
         KDJ.BO.totalNodes = 0;
-        KDJ.BO.worker.postMessage({
-            'action': 'sort',
-            'type': 'request',
-            'node': node,
-            'args': {
-                'isRecursive': true
-            }
-        });
+        console.log("sort called");
+        // KDJ.BO.worker.postMessage({
+        //     'action': 'sort',
+        //     'type': 'request',
+        //     'node': node,
+        //     'args': {
+        //         'isRecursive': true
+        //     }
+        // });
     }
 });

@@ -4,7 +4,7 @@
     "manifest_version": 3,
     "author": "Jaseem V V",
     "description": "Organize Bookmarks",
-    "permissions": ["bookmarks"],
+    "permissions": ["bookmarks", "storage"],
     "background": {
         "service_worker": "service-worker.js"
     },
@@ -12,12 +12,14 @@
         "default_popup": "bookmarks-organizer.html",
         "default_icon": {
             "16": "res/icons/bo-16.png",
+            "32": "res/icons/bo-32.png",
             "48": "res/icons/bo-48.png",
             "128": "res/icons/bo-128.png"
         }
     },
     "icons": {
         "16": "res/icons/bo-16.png",
+        "32": "res/icons/bo-32.png",
         "48": "res/icons/bo-48.png",
         "128": "res/icons/bo-128.png"
     },
