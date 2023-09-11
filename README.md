@@ -3,6 +3,9 @@ v4.0.0
 
 Bookmarks Organizer helps in keeping the bookmarks sorted. It monitors for newly added or moved bookmarks and auto arranges them in ascending order by title. There is a reorder button to manually order the bookmarks in the Bookmarks Bar which can be used initially after installation.
 
+Only bookmarks in the Bookmarks Bar/Favourites Bar are sorted. If you want to have a custom order, those bookmarks can be placed inside the Other Bookmarks/Other Favourites.
+
+
 #### Limitations
 
 - There are max write limits set by the browser so that the sync servers are not abused. So only a certain number of move operations can be performed per session in a given interval of time.
