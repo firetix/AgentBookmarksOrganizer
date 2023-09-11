@@ -6,7 +6,7 @@
     "description": "Sort Bookmarks Alphabetically",
     "permissions": ["bookmarks", "storage"],
     "background": {
-        "service_worker": "service-worker.min.js"
+        "service_worker": "service-worker.js"
     },
     "action": {
         "default_popup": "bookmarks-organizer.html",

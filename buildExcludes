@@ -11,5 +11,3 @@ buildExcludes
 publishScreenshot
 tests
 README.md
-service-worker.js
-popup.js

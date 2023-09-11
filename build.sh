@@ -18,5 +18,5 @@ function copyFiles {
 }
 
 clean
-uglify
+# uglify
 copyFiles
