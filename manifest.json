@@ -1,18 +1,20 @@
 {
     "name": "Bookmarks Organizer",
-    "version": "3.0.0",
-    "manifest_version": 2,
+    "version": "4.0.0",
+    "manifest_version": 3,
     "author": "Jaseem V V",
     "description": "Organize Bookmarks",
     "permissions": ["bookmarks"],
     "background": {
-        "scripts": ["js/bookmark.js", "js/events.js", "js/sortManager.js"],
-        "persistent": false
-      },
-    "browser_action": {
-        "default_title": "Bookmarks Organizer",
-        "default_icon": "res/icons/bo-16.png",
-        "default_popup": "bookmarks-organizer.html"
+        "service_worker": "service-worker.js"
+    },
+    "action": {
+        "default_popup": "bookmarks-organizer.html",
+        "default_icon": {
+            "16": "res/icons/bo-16.png",
+            "48": "res/icons/bo-48.png",
+            "128": "res/icons/bo-128.png"
+        }
     },
     "icons": {
         "16": "res/icons/bo-16.png",
