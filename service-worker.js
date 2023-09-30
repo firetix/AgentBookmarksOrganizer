@@ -3,7 +3,8 @@
 
 var BOOKMARKS_BAR_ID = '1',
     OTHER_BOOKMARKS_ID = '2',
-    IS_IMPORT = 'isImport';
+    IS_IMPORT = 'isImport',
+    reorderLookup = {};  // should reorder compute memoize
 
 function setStorage(key, value, callback) {
     var o = {};
@@ -19,24 +20,32 @@ function removeStorage(key, callback) {
     chrome.storage.local.remove(key, callback);
 }
 
-function shouldReorder(moveInfo, callback) {
+// memoized lookup
+function shouldReorder(moveInfo, orginalParentId, callback) {
     if (moveInfo.parentId == OTHER_BOOKMARKS_ID)  {
+        reorderLookup[orginalParentId] = false;  // cache computed value
         callback(false);  // Ignore Other Bookmarks
         return;
     }
     if (moveInfo.parentId == BOOKMARKS_BAR_ID) {
+        reorderLookup[orginalParentId] = true;  // cache computed value
         callback(true);  // Order if Bookmarks Bar
         return;
     }
+    if (reorderLookup.hasOwnProperty(moveInfo.parentId)) {  // already computed
+        callback(reorderLookup[moveInfo.parentId]);
+        return;
+    }
     getBookmarks(moveInfo.parentId, function(nodes) {
-        shouldReorder(nodes[0], callback);
+        shouldReorder(nodes[0], orginalParentId, callback);
     });
+    
 }
 
 async function onMoved(id, moveInfo) {
     getStorage(IS_IMPORT, (isImport) => {
         if (!isImport) {
-            shouldReorder(moveInfo, function(isReorder) {
+            shouldReorder(moveInfo, moveInfo.parentId, function(isReorder) {
                 if (!isReorder) return;
                 getBookmarks(moveInfo.parentId, function(nodes) {
                     if (nodes.length == 1 && nodes[0].hasOwnProperty('children')) {

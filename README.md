@@ -17,6 +17,10 @@ Only bookmarks in the Bookmarks Bar/Favourites Bar are sorted. If you want to ha
 
 #### Change Logs
 
+##### Version 4.1.1
+
+- Memoize should reorder computation to improve performance
+
 ##### Version 4.1.0
 
 - Ignore auto sorting Other Bookmarks/Other Favourites
