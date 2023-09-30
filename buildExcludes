@@ -2,6 +2,7 @@
 .gitignore
 .DS_Store
 bin
+releases
 res/icons/*.fla
 res/icons/*.svg
 res/icons/*.sketch
@@ -9,5 +10,5 @@ res/icons/v3
 build.sh
 buildExcludes
 publishScreenshot
-tests
+test
 README.md

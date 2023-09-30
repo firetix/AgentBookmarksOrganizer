@@ -19,13 +19,30 @@ function removeStorage(key, callback) {
     chrome.storage.local.remove(key, callback);
 }
 
+function shouldReorder(moveInfo, callback) {
+    if (moveInfo.parentId == OTHER_BOOKMARKS_ID)  {
+        callback(false);  // Ignore Other Bookmarks
+        return;
+    }
+    if (moveInfo.parentId == BOOKMARKS_BAR_ID) {
+        callback(true);  // Order if Bookmarks Bar
+        return;
+    }
+    getBookmarks(moveInfo.parentId, function(nodes) {
+        shouldReorder(nodes[0], callback);
+    });
+}
+
 async function onMoved(id, moveInfo) {
     getStorage(IS_IMPORT, (isImport) => {
         if (!isImport) {
-            getBookmarks(moveInfo.parentId, function(nodes) {
-                if (nodes.length == 1 && nodes[0].hasOwnProperty('children')) {
-                    sortByTitle(nodes[0].children, true);
-                }
+            shouldReorder(moveInfo, function(isReorder) {
+                if (!isReorder) return;
+                getBookmarks(moveInfo.parentId, function(nodes) {
+                    if (nodes.length == 1 && nodes[0].hasOwnProperty('children')) {
+                        sortByTitle(nodes[0].children, true);
+                    }
+                });
             });
         }
     });

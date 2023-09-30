@@ -40,7 +40,7 @@ Thumbs.db
 
 # Others #
 ##########
-bin/*
-tests/*
+bin
+releases
 
 *.min.js
