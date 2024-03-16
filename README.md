@@ -12,7 +12,7 @@ Only bookmarks in the Bookmarks Bar/Favourites Bar are sorted. If you want to ha
 
 #### Install
 
-[Chrome](https://chrome.google.com/webstore/detail/bookmarks-organizer/cjdenbocfdbjohomdaojaokiffjbnaca)
+[Chrome](https://chrome.google.com/webstore/detail/bookmarks-organizer/cjdenbocfdbjohomdaojaokiffjbnaca)  
 [Edge](https://microsoftedge.microsoft.com/addons/detail/bookmarks-organizer/aikhdahlgpnahmekepldbjjfobjhbhna)
 
 #### Change Logs
